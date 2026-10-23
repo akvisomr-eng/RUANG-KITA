@@ -1,4 +1,5 @@
 import { neon } from "@neondatabase/serverless";
+import { checkPublicFormRateLimit } from "@/lib/security/public-rate-limit";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -21,6 +22,10 @@ export async function POST(request: Request) {
   if (email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return Response.json({ error: "Alamat email tidak valid." }, { status: 400 });
   const sql = sqlClient();
   if (!sql) return Response.json({ error: "Penyimpanan newsletter belum dikonfigurasi." }, { status: 503 });
+  let withinLimit: boolean;
+  try { withinLimit = await checkPublicFormRateLimit(request, "newsletter"); }
+  catch { return Response.json({ error: "Proteksi anti-spam belum tersedia; pendaftaran sementara dihentikan." }, { status: 503 }); }
+  if (!withinLimit) return Response.json({ error: "Batas pengiriman tercapai. Coba lagi dalam 15 menit." }, { status: 429 });
   try {
     await sql`
       INSERT INTO newsletter_subscriptions (email, consent_at, status, source)
