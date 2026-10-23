@@ -11,6 +11,9 @@
     "test:static": "node scripts/verify-starter.mjs"
   },
   "dependencies": {
+    "@neondatabase/auth": "0.6.0-beta",
+    "@neondatabase/auth-ui": "0.4.0-beta",
+    "@neondatabase/serverless": "1.0.2",
     "next": "16.4.2",
     "react": "19.3.1",
     "react-dom": "19.3.1",
