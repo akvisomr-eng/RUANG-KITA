@@ -1,6 +1,9 @@
 name: RUANGKITA deployment smoke test
 
 on:
+  push:
+    branches:
+      - feat/deployment-smoke-tests
   workflow_dispatch:
     inputs:
       target:
@@ -19,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 3
     env:
-      RUANGKITA_BASE_URL: ${{ inputs.target == 'preview' && 'https://ruang-kita-git-feat-deployment-smoke-tests-akvisio-autohost.vercel.app' || 'https://ruang-kita-nine.vercel.app' }}
+      RUANGKITA_BASE_URL: ${{ (github.event_name == 'push' || inputs.target == 'preview') && 'https://ruang-kita-git-feat-deployment-smoke-tests-akvisio-autohost.vercel.app' || 'https://ruang-kita-nine.vercel.app' }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
