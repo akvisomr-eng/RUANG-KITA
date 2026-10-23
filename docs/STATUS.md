@@ -4,17 +4,16 @@
 
 - Repository: https://github.com/akvisomr-eng/RUANG-KITA
 - Starter UI, Next.js App Router, TypeScript, static checks, and CI workflow are committed on `main`.
-- Commit `9b06bdc` passed static checks, TypeScript, ESLint, and production build before auth/room additions.
-- Next.js is pinned to patched release `16.4.2`; React is pinned to `19.3.1`.
+- The earlier starter commit `9b06bdc` passed static checks, TypeScript, ESLint, and production build before auth/room additions. Every later change must be re-verified against the current commit in [GitHub Actions](https://github.com/akvisomr-eng/RUANG-KITA/actions); the latest Vercel status observed during this work was pending.
+- Next.js is pinned to `16.4.2`; React is pinned to `19.3.1`.
 - Neon project `mute-cherry-80708442` has separate production and development branches.
 - Neon Auth (Managed Better Auth) is provisioned on development branch `br-noisy-rain-b4eivynk` only. Production branch was not changed.
-- Auth server/client wiring, sign-in/sign-up routes, authenticated dashboard, and server-side room list/create API have been added to the repository.
-- The room API checks the server session, validates title/privacy/scene preset, scopes room listing to the authenticated owner, and writes an audit event when creating a draft.
-- Auth/room code has not yet passed a final complete CI run. Earlier CI runs caught and corrected a lint issue in the room manager; the latest run must be checked for the final result.
+- Auth server/client wiring, sign-in/sign-up routes, authenticated dashboard, and server-side room list/create API are committed.
+- The room API checks the server session, validates title/privacy/scene preset, scopes room listing to the authenticated owner, and writes an audit event when creating a draft. These flows have not yet been verified through a real hosted browser session.
+- `.env.example` documents both server-side `NEON_AUTH_BASE_URL` and browser-side `NEXT_PUBLIC_NEON_AUTH_URL`; deployment values must match the same development Auth endpoint for preview testing.
 - Neon development tables have RLS disabled and there are no policies yet. The app must not expose direct browser database access; RLS policy design and tests remain a release gate.
 - No WebRTC/SFU, live streaming, recording, private media storage, billing, or production monitoring is implemented/verified.
-- Vercel project creation for this repo was denied by the connected integration with HTTP 403. No Vercel project or public deployment URL was created.
-- The local `.env.example` contains placeholders only. The real database connection string and cookie secret must be configured securely in the deployment environment, never committed.
+- Vercel deployment/project metadata and protected URLs remain inaccessible to the connected integration (HTTP 403 for team scope `akvisio-autohost`). Existing deployment links are known, but current runtime/build status could not be independently inspected.
 
 ## Commercial release gate
 
