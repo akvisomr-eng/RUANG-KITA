@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import {
   ArrowDownRight, ArrowRight, ArrowUpRight, AudioLines, BookOpen,
-  Clock3, Headphones, Mic2, Play, Search, Sparkles, Users,
+  Clock3, Headphones, Mail, Mic2, Play, Search, Send, Sparkles, Users,
 } from "lucide-react";
 import "./podcast.css";
 import { ContactForm, NewsletterForm, PodcastEpisodePlayer, PodcastPlatforms } from "./integrations";
