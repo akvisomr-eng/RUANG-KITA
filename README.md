@@ -28,7 +28,7 @@ npm run lint
 npm run build
 ```
 
-Latest verified successful CI before the auth/room additions: commit `9b06bdc` (static checks, typecheck, lint, build). Newer auth/room changes are being revalidated; see [GitHub Actions](https://github.com/akvisomr-eng/RUANG-KITA/actions) for the latest result.
+Check [GitHub Actions](https://github.com/akvisomr-eng/RUANG-KITA/actions) for the latest static checks, typecheck, lint, and production build result on the current commit. A successful CI run does not by itself verify hosted authentication, database authorization, or live media.
 
 ## Security and product principles
 
