@@ -19,6 +19,7 @@ assert.match(mobileCss, /\.mobile-dock\{display:grid/);
 assert.match(mobileCss, /env\(safe-area-inset-bottom\)/);
 assert.match(mobileCss, /prefers-reduced-motion:reduce/);
 assert.ok(existsSync('app/manifest.ts'), 'Missing web app manifest');
+assert.ok(existsSync('public/ruangkita-icon.svg'), 'Missing vector app icon');
 const layout = readFileSync('app/layout.tsx', 'utf8');
 assert.match(layout, /viewportFit: 'cover'/);
 
