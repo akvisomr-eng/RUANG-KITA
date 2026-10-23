@@ -12,6 +12,9 @@ export default function manifest(): MetadataRoute.Manifest {
     background_color: '#f4f6f4',
     theme_color: '#fbfcfb',
     lang: 'id',
+    icons: [
+      { src: '/ruangkita-icon.svg', sizes: 'any', type: 'image/svg+xml', purpose: 'any' },
+    ],
     categories: ['video', 'social', 'productivity'],
   };
 }
