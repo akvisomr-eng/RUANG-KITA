@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getServerAuth } from "@/lib/auth/server";
+import { RoomManager } from "./room-manager";
 
 export const dynamic = "force-dynamic";
 
@@ -11,5 +12,5 @@ export default async function DashboardPage() {
   }
   const { data } = await auth.getSession();
   if (!data?.user) redirect("/auth/sign-in");
-  return <main className="dashboard-shell"><header className="dashboard-top"><Link href="/" className="auth-brand">RUANGKITA</Link><span>Creator Workspace</span></header><section className="dashboard-welcome"><p className="auth-eyebrow">WORKSPACE</p><h1>Selamat datang, {data.user.name || data.user.email}</h1><p>Akun Anda berhasil dikenali. Pembuatan ruang dan media langsung akan diaktifkan setelah backend dan izin akses lulus pengujian.</p><Link className="primary-button" href="/">Buka studio</Link></section></main>;
+  return <main className="dashboard-shell"><header className="dashboard-top"><Link href="/" className="auth-brand">RUANGKITA</Link><span>Creator Workspace</span></header><section className="dashboard-welcome"><p className="auth-eyebrow">WORKSPACE</p><h1>Selamat datang, {data.user.name || data.user.email}</h1><p>Kelola draft ruang podcast Anda. Fitur media langsung akan dibuka setelah transport WebRTC, persetujuan peserta, dan pengujian keamanan selesai.</p><RoomManager /></section></main>;
 }
