@@ -55,10 +55,11 @@ export function NewsletterForm() {
   const [message, setMessage] = useState("");
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const website = String(new FormData(event.currentTarget).get("website") ?? "");
     if (!consent) { setMessage("Persetujuan menerima newsletter wajib dicentang."); return; }
     setBusy(true); setMessage("");
     try {
-      const response = await fetch("/api/newsletter", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email, consent, website: "" }) });
+      const response = await fetch("/api/newsletter", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email, consent, website }) });
       const data = await response.json();
       setMessage(response.ok ? data.message : (data.error || "Pendaftaran belum berhasil."));
       if (response.ok) { setEmail(""); setConsent(false); }
@@ -82,10 +83,11 @@ export function ContactForm() {
   const [status, setStatus] = useState("");
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const website = String(new FormData(event.currentTarget).get("website") ?? "");
     if (!consent) { setStatus("Persetujuan pemrosesan pesan wajib dicentang."); return; }
     setBusy(true); setStatus("");
     try {
-      const response = await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...form, consent, website: "" }) });
+      const response = await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...form, consent, website }) });
       const data = await response.json();
       setStatus(response.ok ? data.message : (data.error || "Pesan belum berhasil dikirim."));
       if (response.ok) setForm({ name: "", email: "", message: "" });
