@@ -10,6 +10,9 @@ assert.ok(existsSync('.github/workflows/ci.yml'));
 const page = readFileSync('app/page.tsx', 'utf8');
 assert.match(page, /Pratinjau, belum live/);
 assert.match(page, /Preset disimpan bersama draft ruang/);
+for (const slug of ['podcast-formal', 'community-talk', 'podcast-hybrid', 'audio-first']) {
+  assert.ok(page.includes(slug), `Missing production preset mapping: ${slug}`);
+}
 const envExample = readFileSync('.env.example', 'utf8');
 assert.match(envExample, /^NEXT_PUBLIC_NEON_AUTH_URL=/m);
 console.log('RUANGKITA static starter checks passed.');
