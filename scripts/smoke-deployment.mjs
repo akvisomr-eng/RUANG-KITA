@@ -9,24 +9,41 @@ assert.equal(target.pathname, "/", "RUANGKITA_BASE_URL must be an origin, not a 
 assert.equal(target.search, "", "Do not pass query parameters.");
 assert.equal(target.hash, "", "Do not pass a URL fragment.");
 
+const bypassSecret = process.env.VERCEL_AUTOMATION_BYPASS_SECRET;
+
 async function get(path) {
+  const headers = { "user-agent": "ruangkita-deployment-smoke/1.0" };
+  if (bypassSecret) headers["x-vercel-protection-bypass"] = bypassSecret;
   const response = await fetch(new URL(path, target), {
     redirect: "manual",
     signal: AbortSignal.timeout(15_000),
-    headers: { "user-agent": "ruangkita-deployment-smoke/1.0" },
+    headers,
   });
   return response;
 }
 
+function assertPublicResponse(response, expectedStatus, label) {
+  const location = response.headers.get("location");
+  const protectionHint =
+    response.status >= 300 && response.status < 400 && !bypassSecret
+      ? " This preview may be protected by Vercel SSO; configure the Vercel automation bypass secret as GitHub Actions secret VERCEL_AUTOMATION_BYPASS_SECRET. Do not disable deployment protection just to pass this test."
+      : "";
+  assert.equal(
+    response.status,
+    expectedStatus,
+    `${label} should return ${expectedStatus}; got ${response.status}.${location ? ` Redirect location: ${location}.` : ""}${protectionHint}`,
+  );
+}
+
 const home = await get("/");
-assert.equal(home.status, 200, `Homepage should return 200; got ${home.status}`);
-assert.match(home.headers.get("content-type") ?? "", /text\/html/i, "Homepage must be HTML");
+assertPublicResponse(home, 200, "Homepage");
+assert.match(home.headers.get("content-type") ?? "", /text\\/html/i, "Homepage must be HTML");
 const html = await home.text();
 assert.match(html, /RUANGKITA/i, "Homepage response should identify RUANGKITA");
 console.log("PASS homepage: HTTPS 200 and RUANGKITA HTML");
 
 const manifestResponse = await get("/manifest.webmanifest");
-assert.equal(manifestResponse.status, 200, `Manifest should return 200; got ${manifestResponse.status}`);
+assertPublicResponse(manifestResponse, 200, "Manifest");
 assert.match(manifestResponse.headers.get("content-type") ?? "", /json/i, "Manifest must be JSON");
 const manifest = await manifestResponse.json();
 assert.equal(manifest.short_name, "RUANGKITA");
