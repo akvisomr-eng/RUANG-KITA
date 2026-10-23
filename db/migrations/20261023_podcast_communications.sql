@@ -1,4 +1,4 @@
--- Additive migration. Apply to the RUANGKITA development branch first.
+-- Additive migration. Apply to RUANGKITA development branch first.
 CREATE TABLE IF NOT EXISTS public.newsletter_subscriptions (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   email text NOT NULL UNIQUE,
@@ -23,24 +23,6 @@ CREATE TABLE IF NOT EXISTS public.contact_messages (
 );
 CREATE INDEX IF NOT EXISTS contact_messages_status_created_idx
   ON public.contact_messages (status, created_at DESC);
-
-CREATE TABLE IF NOT EXISTS public.billing_webhook_events (
-  event_id text PRIMARY KEY,
-  event_type text NOT NULL,
-  received_at timestamptz NOT NULL DEFAULT now()
-);
-CREATE TABLE IF NOT EXISTS public.billing_subscriptions (
-  stripe_subscription_id text PRIMARY KEY,
-  owner_subject text NOT NULL,
-  stripe_customer_id text,
-  stripe_price_id text,
-  status text NOT NULL,
-  current_period_end timestamptz,
-  created_at timestamptz NOT NULL DEFAULT now(),
-  updated_at timestamptz NOT NULL DEFAULT now()
-);
-CREATE INDEX IF NOT EXISTS billing_subscriptions_owner_idx
-  ON public.billing_subscriptions (owner_subject, status);
 
 CREATE TABLE IF NOT EXISTS public.billing_webhook_events (
   event_id text PRIMARY KEY,
