@@ -5,10 +5,10 @@ Updated: 2026-10-23
 ## Implemented in code (still requires hosted validation)
 - Podcast player renders a native HTML audio player only when a public HTTPS audio URL is configured: `PODCAST_EPISODE_1_AUDIO_URL` through `PODCAST_EPISODE_3_AUDIO_URL`.
 - Official platform cards read only configured HTTPS URLs: `PODCAST_SPOTIFY_URL`, `PODCAST_APPLE_URL`, `PODCAST_YOUTUBE_URL`, `PODCAST_INSTAGRAM_URL`, `PODCAST_X_URL`, `PODCAST_OFFICIAL_URL`. Do not invent official accounts.
-- Newsletter and contact forms validate input, require explicit consent, reject cross-origin requests, use a honeypot, and persist via the server-side Neon connection. Automated email sending, double opt-in, unsubscribe, and contact notifications are not implemented.
+- Newsletter and contact forms validate input, require explicit consent, reject cross-origin requests, use a honeypot, enforce a database-backed limit of five submissions per 15-minute window per hashed client identifier and form, and persist via the server-side Neon connection. Automated email sending, double opt-in, unsubscribe, and contact notifications are not implemented.
 - A fail-closed Stripe Checkout endpoint, signed webhook verification, subscription status endpoint, pricing UI, and webhook/subscription tables are implemented. Checkout is disabled until provider credentials, product price, HTTPS URL, and webhook configuration are set.
 - Security headers are configured in `next.config.ts`; `/api/health` checks database connectivity without exposing secrets.
-- The additive migration has been applied to Neon development branch `br-noisy-rain-b4eivynk`; schema inspection confirmed all four tables. Production schema was not changed.
+- The additive communication/billing tables and rate-limit table have been applied to Neon development branch `br-noisy-rain-b4eivynk` and production branch `br-shiny-hall-b4tl36ee`; schema inspection confirmed table presence. Changes are additive and do not modify existing tables.
 
 ## Required before production
 1. Supply real recorded episodes and verify playback, range requests, mobile behavior, rights and accessibility. Stock images are not published episodes.
