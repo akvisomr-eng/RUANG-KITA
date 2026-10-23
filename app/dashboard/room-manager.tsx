@@ -101,8 +101,8 @@ export function RoomManager({ initialPresetSlug = "" }: { initialPresetSlug?: st
         setMessage(data.error || "Ruang belum dapat dibuat.");
       } else {
         setTitle("");
-        setMessage("Ruang draft berhasil dibuat. Siaran langsung belum aktif.");
         await loadRooms();
+        setMessage("Ruang draft berhasil dibuat. Siaran langsung belum aktif.");
       }
     } catch {
       setMessage("Koneksi gagal. Ruang belum dapat dibuat.");
