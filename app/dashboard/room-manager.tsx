@@ -19,7 +19,6 @@ export function RoomManager() {
   const [message, setMessage] = useState("");
 
   async function loadRooms() {
-    setLoading(true);
     try {
       const response = await fetch("/api/rooms", { cache: "no-store" });
       const data = await response.json();
