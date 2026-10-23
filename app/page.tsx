@@ -57,6 +57,13 @@ export default function Home() {
       <Link className="sidebar-cta" href="/dashboard"><Plus size={15}/> Buka workspace</Link>
       <div className="profile"><div className="profile-avatar">RK</div><div><strong>Pengunjung</strong><small>Mode pratinjau</small></div><Settings2 size={18}/></div>
     </aside>
+    <nav className="mobile-dock" aria-label="Navigasi utama">
+      <button className={`dock-item ${tab === 'studio' ? 'active' : ''}`} aria-current={tab === 'studio' ? 'page' : undefined} onClick={() => switchPanel('studio')}><MonitorPlay size={19}/><span>Studio</span></button>
+      <Link className="dock-item" href="/dashboard"><Plus size={19}/><span>Ruang</span></Link>
+      <button className={`dock-item ${tab === 'avatars' ? 'active' : ''}`} aria-current={tab === 'avatars' ? 'page' : undefined} onClick={() => switchPanel('avatars')}><Users size={19}/><span>Avatar</span></button>
+      <button className={`dock-item ${tab === 'production' ? 'active' : ''}`} aria-current={tab === 'production' ? 'page' : undefined} onClick={() => switchPanel('production')}><Layers3 size={19}/><span>Scene</span></button>
+      <button className="dock-item" onClick={() => setDialog('privacy')}><ShieldCheck size={19}/><span>Privasi</span></button>
+    </nav>
     <section className="main-panel" id="top">
       <header className="topbar"><div className="breadcrumbs">Workspace <span>/</span> <strong>{tab === 'studio' ? 'Studio' : tab === 'avatars' ? 'Avatar Studio' : 'Produksi & Scene'}</strong></div><div className="top-actions"><span className="preview-pill"><span/> PRATINJAU</span><button className="icon-button" aria-label="Bantuan" onClick={() => setDialog('help')}><CircleHelp size={18}/></button><div className="profile-avatar mini">RK</div></div></header>
       <div className="content">

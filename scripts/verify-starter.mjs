@@ -12,6 +12,17 @@ assert.ok(existsSync('.github/workflows/ci.yml'));
 const page = readFileSync('app/page.tsx', 'utf8');
 assert.match(page, /Pratinjau, belum live/);
 assert.match(page, /Preset disimpan bersama draft ruang/);
+assert.match(page, /className="mobile-dock"/);
+assert.match(page, /aria-label="Navigasi utama"/);
+const mobileCss = readFileSync('app/globals.css', 'utf8');
+assert.match(mobileCss, /\.mobile-dock\{display:grid/);
+assert.match(mobileCss, /env\(safe-area-inset-bottom\)/);
+assert.match(mobileCss, /prefers-reduced-motion:reduce/);
+assert.ok(existsSync('app/manifest.ts'), 'Missing web app manifest');
+assert.ok(existsSync('public/ruangkita-icon.svg'), 'Missing vector app icon');
+const layout = readFileSync('app/layout.tsx', 'utf8');
+assert.match(layout, /viewportFit: 'cover'/);
+
 for (const slug of ['podcast-formal', 'community-talk', 'podcast-hybrid', 'audio-first']) {
   assert.ok(page.includes(slug), `Missing production preset mapping: ${slug}`);
 }

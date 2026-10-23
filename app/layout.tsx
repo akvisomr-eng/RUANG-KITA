@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
 import '@neondatabase/auth-ui/css';
 import './globals.css';
@@ -8,6 +8,14 @@ export const metadata: Metadata = {
   title: 'RUANGKITA — Virtual Podcast Studio',
   description: 'Studio podcast virtual untuk kreator, komunitas, dan tim.',
   applicationName: 'RUANGKITA',
+  manifest: '/manifest.webmanifest',
+};
+
+export const viewport: Viewport = {
+  themeColor: '#fbfcfb',
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {

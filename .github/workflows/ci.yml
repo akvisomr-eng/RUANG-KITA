@@ -1,9 +1,9 @@
 name: RUANGKITA CI
 on:
   push:
-    branches: [main, 'dev/**', 'feature/**']
+    branches: [main, 'dev/**', 'feature/**', 'feat/**']
   pull_request:
-    branches: [main]
+    branches: [main, 'dev/**', 'feature/**', 'feat/**']
 permissions:
   contents: read
 concurrency:
