@@ -10,11 +10,12 @@ type Dialog = 'status' | 'privacy' | 'help' | null;
 
 const scenes: Scene[] = [
   { name: 'Ruang Hangat', label: 'PODCAST', description: 'Studio intim untuk percakapan mendalam', colors: ['#173c37', '#c69b66'] },
-  { name: 'Kota Malam', label: 'TALK SHOW', description: 'Nuansa neon untuk diskusi dan hiburan', colors: ['#30205a', '#8e6aff'] },
-  { name: 'Ruang Berita', label: 'LIVE UPDATE', description: 'Tata letak bersih untuk berita dan edukasi', colors: ['#18324e', '#57a9d8'] },
+  { name: 'Kota Malam', label: 'COMMUNITY TALK', description: 'Nuansa neon untuk diskusi komunitas dan hiburan', colors: ['#30205a', '#8e6aff'] },
+  { name: 'Ruang Berita', label: 'HYBRID AVATAR', description: 'Format gabungan video manusia dan avatar 3D', colors: ['#18324e', '#57a9d8'] },
+  { name: 'Suara Fokus', label: 'AUDIO FIRST', description: 'Produksi berbasis suara untuk perangkat atau jaringan terbatas', colors: ['#173b44', '#55c7b6'] },
 ];
 
-const presetSlugs = ['podcast-formal', 'community-talk', 'audio-first'];
+const presetSlugs = ['podcast-formal', 'community-talk', 'podcast-hybrid', 'audio-first'];
 
 const avatarOptions = [
   { id: 'human', title: 'Presenter realistis', detail: 'Gaya presenter manusia untuk podcast formal', icon: Users },
