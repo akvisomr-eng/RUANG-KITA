@@ -25,14 +25,24 @@ export async function GET() {
   if (!sql) return Response.json({ error: "Database is not configured." }, { status: 503 });
 
   try {
-    const rooms = await sql`
-      SELECT id, title, status, privacy_mode, created_at
-      FROM podcast_rooms
-      WHERE owner_subject = ${user.id}
-      ORDER BY created_at DESC
-      LIMIT 50
-    `;
-    return Response.json({ rooms });
+    const [rooms, presets] = await Promise.all([
+      sql`
+        SELECT r.id, r.title, r.status, r.privacy_mode, r.created_at, s.title AS scene_title
+        FROM podcast_rooms r
+        LEFT JOIN scene_presets s ON s.id = r.scene_preset_id
+        WHERE r.owner_subject = ${user.id}
+        ORDER BY r.created_at DESC
+        LIMIT 50
+      `,
+      sql`
+        SELECT id, slug, title, description
+        FROM scene_presets
+        WHERE is_public = true
+        ORDER BY title
+        LIMIT 50
+      `,
+    ]);
+    return Response.json({ rooms, presets });
   } catch {
     return Response.json({ error: "Could not load rooms." }, { status: 500 });
   }
