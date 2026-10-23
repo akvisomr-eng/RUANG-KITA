@@ -9,5 +9,5 @@ assert.ok(existsSync('docs/ARCHITECTURE.md'));
 assert.ok(existsSync('.github/workflows/ci.yml'));
 const page = readFileSync('app/page.tsx', 'utf8');
 assert.match(page, /Pratinjau, belum live/);
-assert.match(page, /belum diimplementasikan/);
+assert.match(page, /belum terhubung/);
 console.log('RUANGKITA static starter checks passed.');
