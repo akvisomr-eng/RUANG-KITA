@@ -37,7 +37,7 @@ function assertPublicResponse(response, expectedStatus, label) {
 
 const home = await get("/");
 assertPublicResponse(home, 200, "Homepage");
-assert.match(home.headers.get("content-type") ?? "", /text\\/html/i, "Homepage must be HTML");
+assert.match(home.headers.get("content-type") ?? "", /text\/html/i, "Homepage must be HTML");
 const html = await home.text();
 assert.match(html, /RUANGKITA/i, "Homepage response should identify RUANGKITA");
 console.log("PASS homepage: HTTPS 200 and RUANGKITA HTML");
