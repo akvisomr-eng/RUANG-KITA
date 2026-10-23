@@ -1,6 +1,7 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import type { FormEvent } from "react";
 import Link from "next/link";
 
 type Room = {
@@ -36,7 +37,33 @@ export function RoomManager() {
     }
   }
 
-  useEffect(() => { void loadRooms(); }, []);
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch("/api/rooms", { cache: "no-store", signal: controller.signal })
+      .then(async (response) => {
+        const data = await response.json();
+        if (!response.ok) {
+          const message = response.status === 401
+            ? "Silakan masuk kembali untuk melihat ruang Anda."
+            : (data.error || "Ruang belum dapat dimuat.");
+          throw new Error(message);
+        }
+        return data.rooms as Room[];
+      })
+      .then((loadedRooms) => {
+        setRooms(loadedRooms);
+        setMessage("");
+      })
+      .catch((error: unknown) => {
+        if (controller.signal.aborted) return;
+        setRooms([]);
+        setMessage(error instanceof Error ? error.message : "Koneksi ke layanan ruang gagal.");
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) setLoading(false);
+      });
+    return () => controller.abort();
+  }, []);
 
   async function createRoom(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
