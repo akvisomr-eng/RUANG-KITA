@@ -50,3 +50,46 @@ for (const script of ['test:static', 'typecheck', 'lint', 'build']) {
 }
 
 console.log('RUANGKITA static and security-regression checks passed.');
+
+
+// Release-gate regression checks for newly connected public and billing APIs.
+const podcastIntegrations = readFileSync('app/podcast/integrations.tsx', 'utf8');
+assert.match(podcastIntegrations, /<audio controls preload="none"/);
+assert.match(podcastIntegrations, /PodcastEpisodePlayer/);
+assert.match(podcastIntegrations, /consent/);
+assert.match(podcastIntegrations, /new FormData\(event\.currentTarget\)/);
+const podcastConfig = readFileSync('app/api/podcast/config/route.ts', 'utf8');
+assert.match(podcastConfig, /protocol === "https:"/);
+assert.match(podcastConfig, /PODCAST_EPISODE_/);
+const newsletterApi = readFileSync('app/api/newsletter/route.ts', 'utf8');
+assert.ok(newsletterApi.includes('origin !== new URL(request.url).origin'));
+assert.match(newsletterApi, /input\.consent !== true/);
+const contactApi = readFileSync('app/api/contact/route.ts', 'utf8');
+assert.match(contactApi, /contact_messages/);
+assert.match(contactApi, /input\.consent !== true/);
+const checkoutApi = readFileSync('app/api/billing/checkout/route.ts', 'utf8');
+assert.match(checkoutApi, /STRIPE_SECRET_KEY/);
+assert.match(checkoutApi, /auth\.getSession\(\)/);
+assert.match(checkoutApi, /checkout\.stripe\.com/);
+const webhookApi = readFileSync('app/api/billing/webhook/route.ts', 'utf8');
+assert.match(webhookApi, /timingSafeEqual/);
+assert.match(webhookApi, /STRIPE_WEBHOOK_SECRET/);
+assert.match(webhookApi, /billing_webhook_events/);
+const migration = readFileSync('db/migrations/20261023_podcast_communications.sql', 'utf8');
+for (const table of ['newsletter_subscriptions', 'contact_messages', 'billing_webhook_events', 'billing_subscriptions']) {
+  assert.ok(migration.includes(`CREATE TABLE IF NOT EXISTS public.${table}`), `Missing migration table: ${table}`);
+}
+const nextConfig = readFileSync('next.config.ts', 'utf8');
+assert.match(nextConfig, /X-Content-Type-Options/);
+assert.match(nextConfig, /Referrer-Policy/);
+assert.match(nextConfig, /Strict-Transport-Security/);
+assert.ok(existsSync('app/api/health/route.ts'));
+assert.ok(existsSync('app/api/billing/status/route.ts'));
+console.log('Podcast, billing, migration, and security regression checks passed.');
+
+const rateLimit = readFileSync('lib/security/public-rate-limit.ts', 'utf8');
+assert.match(rateLimit, /createHmac/);
+assert.match(rateLimit, /interval '15 minutes'/);
+assert.match(rateLimit, /RETURNING hits/);
+assert.ok(existsSync('db/migrations/20261023_public_form_rate_limits.sql'));
+console.log('Public-form rate-limit regression checks passed.');

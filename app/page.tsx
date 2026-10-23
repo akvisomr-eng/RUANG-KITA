@@ -54,7 +54,7 @@ export default function Home() {
       <button className="nav-item" onClick={() => setDialog('privacy')}><ShieldCheck size={18}/> Privasi & izin</button>
       <button className="nav-item" onClick={() => setDialog('help')}><CircleHelp size={18}/> Bantuan & panduan</button>
       <div className="sidebar-bottom"><div className="support-icon"><CircleHelp size={18}/></div><div><strong>Perlu mulai bekerja?</strong><small>Buat draft ruang privat</small></div></div>
-      <Link className="sidebar-cta" href="/dashboard"><Plus size={15}/> Buka workspace</Link>
+      <Link className="sidebar-cta" href="/pricing">Paket & Langganan</Link><Link className="sidebar-cta" href="/dashboard"><Plus size={15}/> Buka workspace</Link>
       <div className="profile"><div className="profile-avatar">RK</div><div><strong>Pengunjung</strong><small>Mode pratinjau</small></div><Settings2 size={18}/></div>
     </aside>
     <section className="main-panel" id="top">

@@ -2,7 +2,7 @@
 
 AI Virtual Podcast & Live Production Platform.
 
-> **Current status:** application foundation and first authenticated draft-room API are in the repository. This is **not yet a live podcast or commercial service**. Live media transport, recording, streaming, private media storage, billing, production monitoring, and end-to-end verification remain outstanding.
+> **Current status:** application foundation and first authenticated draft-room API are in the repository. This is **not yet a live podcast or commercial service**. Live media transport, recording, streaming, private media storage, production monitoring, and end-to-end verification remain outstanding. Podcast communications and a fail-closed Stripe billing scaffold have been added, but email delivery and paid checkout are not active until provider configuration and tests are complete.
 
 ## Local development
 
