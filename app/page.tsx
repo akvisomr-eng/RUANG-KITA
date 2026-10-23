@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Activity, AudioLines, Bot, Check, ChevronDown, CircleHelp, Clapperboard, Layers3, MonitorPlay, Plus, Settings2, ShieldCheck, Sparkles, Users, Wifi, X, Camera, Mic, Video, LockKeyhole, Palette, SlidersHorizontal } from 'lucide-react';
+import { Activity, AudioLines, Bot, Check, ChevronDown, CircleHelp, Clapperboard, Layers3, MonitorPlay, Plus, Settings2, ShieldCheck, Sparkles, Users, Wifi, X, Mic, LockKeyhole, Palette, SlidersHorizontal } from 'lucide-react';
 
 type Scene = { name: string; label: string; description: string; colors: [string, string] };
 type Panel = 'studio' | 'avatars' | 'production';
