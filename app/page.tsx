@@ -20,7 +20,6 @@ export default function Home() {
   const [selected, setSelected] = useState(0);
   const [tab, setTab] = useState<'studio' | 'avatars' | 'production'>('studio');
   const [showStatus, setShowStatus] = useState(false);
-  const scene = scenes[selected];
 
   return <main className="shell">
     <aside className="sidebar">
