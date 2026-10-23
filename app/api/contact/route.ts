@@ -1,4 +1,5 @@
 import { neon } from "@neondatabase/serverless";
+import { checkPublicFormRateLimit } from "@/lib/security/public-rate-limit";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -25,6 +26,10 @@ export async function POST(request: Request) {
   if (message.length < 10 || message.length > 5000) return Response.json({ error: "Pesan harus berisi 10–5000 karakter." }, { status: 400 });
   const sql = sqlClient();
   if (!sql) return Response.json({ error: "Penyimpanan pesan belum dikonfigurasi." }, { status: 503 });
+  let withinLimit: boolean;
+  try { withinLimit = await checkPublicFormRateLimit(request, "contact"); }
+  catch { return Response.json({ error: "Proteksi anti-spam belum tersedia; pengiriman pesan sementara dihentikan." }, { status: 503 }); }
+  if (!withinLimit) return Response.json({ error: "Batas pengiriman tercapai. Coba lagi dalam 15 menit." }, { status: 429 });
   try {
     await sql`INSERT INTO contact_messages (name, email, message, consent_at, status) VALUES (${name}, ${email}, ${message}, now(), 'new')`;
     return Response.json({ message: "Pesan tersimpan. Tim belum menerima notifikasi email otomatis; tindak lanjut masih perlu dilakukan melalui dashboard database." }, { status: 201 });
