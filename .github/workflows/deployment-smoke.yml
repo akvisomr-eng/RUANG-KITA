@@ -1,0 +1,33 @@
+name: RUANGKITA deployment smoke test
+
+on:
+  push:
+    branches:
+      - feat/deployment-smoke-tests
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Deployment to probe
+        required: true
+        type: choice
+        options:
+          - production
+          - preview
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    env:
+      RUANGKITA_BASE_URL: ${{ (github.event_name == 'push' || inputs.target == 'preview') && 'https://ruang-kita-git-feat-deployment-smoke-tests-akvisio-autohost.vercel.app' || 'https://ruang-kita-nine.vercel.app' }}
+      VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Probe deployment and unauthenticated boundary
+        run: node scripts/smoke-deployment.mjs
