@@ -33,7 +33,7 @@ Check [GitHub Actions](https://github.com/akvisomr-eng/RUANG-KITA/actions) for t
 ## Security and product principles
 
 - Free-tier-first; never assume unlimited compute, storage, egress, or media capacity.
-- Use development branches first; production database was not modified during the current work.
+- Use development branches first. Additive communications/billing migrations have been applied to Neon development and production branches; existing production tables were not altered by these migrations.
 - Server-side session and ownership checks are mandatory; client state is not a security boundary.
 - Recording requires explicit consent and visible recording state.
 - Personal likeness/avatar assets require consent and license provenance.
@@ -43,7 +43,7 @@ Check [GitHub Actions](https://github.com/akvisomr-eng/RUANG-KITA/actions) for t
 ## Implementation roadmap
 
 1. Complete and verify authentication + draft-room CRUD on the development branch.
-2. Configure a deploy host and branch-specific environment variables.
+2. Authorize Vercel team access and verify the deployed commit and branch-specific environment variables.
 3. Implement room invitations, roles, and short-lived room credentials.
 4. Integrate and test a WebRTC/SFU provider for real multi-participant audio/video.
 5. Add local/offline recording, private media storage, consent and retention workflows.
