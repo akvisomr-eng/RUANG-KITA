@@ -1,0 +1,13 @@
+import { readFileSync, existsSync } from 'node:fs';
+import { strict as assert } from 'node:assert';
+const pkg = JSON.parse(readFileSync('package.json', 'utf8'));
+assert.equal(pkg.name, 'ruangkita');
+assert.ok(existsSync('app/page.tsx'));
+assert.ok(existsSync('app/layout.tsx'));
+assert.ok(existsSync('app/globals.css'));
+assert.ok(existsSync('docs/ARCHITECTURE.md'));
+assert.ok(existsSync('.github/workflows/ci.yml'));
+const page = readFileSync('app/page.tsx', 'utf8');
+assert.match(page, /Pratinjau, belum live/);
+assert.match(page, /belum diimplementasikan/);
+console.log('RUANGKITA static starter checks passed.');
