@@ -62,7 +62,7 @@ const podcastConfig = readFileSync('app/api/podcast/config/route.ts', 'utf8');
 assert.match(podcastConfig, /protocol === "https:"/);
 assert.match(podcastConfig, /PODCAST_EPISODE_/);
 const newsletterApi = readFileSync('app/api/newsletter/route.ts', 'utf8');
-assert.match(newsletterApi, /origin !== new URL\(request\.url\)\.origin/);
+assert.ok(newsletterApi.includes('origin !== new URL(request.url).origin'));
 assert.match(newsletterApi, /input\.consent !== true/);
 assert.match(newsletterApi, /origin !== new URL\\(request\\.url\\)\\.origin/);
 const contactApi = readFileSync('app/api/contact/route.ts', 'utf8');
