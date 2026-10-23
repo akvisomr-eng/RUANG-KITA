@@ -41,3 +41,21 @@ CREATE TABLE IF NOT EXISTS public.billing_subscriptions (
 );
 CREATE INDEX IF NOT EXISTS billing_subscriptions_owner_idx
   ON public.billing_subscriptions (owner_subject, status);
+
+CREATE TABLE IF NOT EXISTS public.billing_webhook_events (
+  event_id text PRIMARY KEY,
+  event_type text NOT NULL,
+  received_at timestamptz NOT NULL DEFAULT now()
+);
+CREATE TABLE IF NOT EXISTS public.billing_subscriptions (
+  stripe_subscription_id text PRIMARY KEY,
+  owner_subject text NOT NULL,
+  stripe_customer_id text,
+  stripe_price_id text,
+  status text NOT NULL,
+  current_period_end timestamptz,
+  created_at timestamptz NOT NULL DEFAULT now(),
+  updated_at timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS billing_subscriptions_owner_idx
+  ON public.billing_subscriptions (owner_subject, status);
