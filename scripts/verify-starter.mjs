@@ -87,3 +87,10 @@ assert.match(nextConfig, /Strict-Transport-Security/);
 assert.ok(existsSync('app/api/health/route.ts'));
 assert.ok(existsSync('app/api/billing/status/route.ts'));
 console.log('Podcast, billing, migration, and security regression checks passed.');
+
+const rateLimit = readFileSync('lib/security/public-rate-limit.ts', 'utf8');
+assert.match(rateLimit, /createHmac/);
+assert.match(rateLimit, /interval '15 minutes'/);
+assert.match(rateLimit, /RETURNING hits/);
+assert.ok(existsSync('db/migrations/20261023_public_form_rate_limits.sql'));
+console.log('Public-form rate-limit regression checks passed.');
