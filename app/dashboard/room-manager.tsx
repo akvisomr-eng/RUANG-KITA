@@ -53,10 +53,10 @@ export function RoomManager({ initialPresetSlug = "" }: { initialPresetSlug?: st
       .then(async (response) => {
         const data = await response.json();
         if (!response.ok) {
-          const message = response.status === 401
+          const errorMessage = response.status === 401
             ? "Silakan masuk kembali untuk melihat ruang Anda."
             : (data.error || "Ruang belum dapat dimuat.");
-          throw new Error(message);
+          throw new Error(errorMessage);
         }
         return data as { rooms: Room[]; presets: ScenePreset[] };
       })
@@ -124,6 +124,6 @@ export function RoomManager({ initialPresetSlug = "" }: { initialPresetSlug?: st
       <p className="room-field-help">Preset disimpan bersama draft ruang dan belum mengaktifkan siaran.</p>
     </form>
     {message && <p className="room-message" role="status">{message} {message.includes("masuk") && <Link href="/auth/sign-in">Masuk</Link>}</p>}
-    {loading ? <p className="room-empty">Memuat ruang dan preset…</p> : rooms.length === 0 ? <p className="room-empty">Belum ada ruang. Buat draft pertama Anda di atas.</p> : <div className="room-list">{rooms.map((room) => <article className="room-item" key={room.id}><span className="room-item-icon">RK</span><div className="room-item-copy"><strong>{room.title}</strong><small>{room.scene_title ? `${room.scene_title} · ` : ""}{room.privacy_mode === "invite_only" ? "Privat · Undangan saja" : room.privacy_mode} · {new Date(room.created_at).toLocaleString("id-ID")}</small></div><span className="room-status">{room.status === "draft" ? "DRAFT" : room.status.toUpperCase()}</span></article>)}</div>}
+    {loading ? <p className="room-empty">Memuat ruang dan preset…</p> : rooms.length === 0 ? <p className="room-empty">Belum ada ruang. Buat draft pertama Anda di atas.</p> : <div className="room-list">{rooms.map((room) => <article className="room-item" key={room.id}><span className="room-item-icon">RK</span><div className="room-item-copy"><strong>{room.title}</strong><small>{room.scene_title ? `${room.scene_title} · ` : ""}{room.privacy_mode === "invite_only" ? "Privat · Undangan saja" : room.privacy_mode} · {new Date(room.created_at).toLocaleString("id-ID")}</small></div><span className="room-status">{room.status === "draft" ? "DRAFT" : room.status.toUpperCase()}</span><Link className="primary-button" href={`/dashboard/rooms/${encodeURIComponent(room.id)}`}>Buka draft</Link></article>)}</div>}
   </section>;
 }
