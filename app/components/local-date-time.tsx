@@ -1,16 +1,29 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
+
+function formatLocalDateTime(value: string | Date): string {
+  const date = new Date(value);
+  return Number.isNaN(date.getTime())
+    ? "Waktu tidak tersedia"
+    : date.toLocaleString("id-ID", {
+        dateStyle: "short",
+        timeStyle: "medium",
+      });
+}
 
 export function LocalDateTime({ value }: { value: string | Date }) {
-  const [formatted, setFormatted] = useState("");
-  useEffect(() => {
-    const date = new Date(value);
-    setFormatted(Number.isNaN(date.getTime()) ? "Waktu tidak tersedia" : date.toLocaleString("id-ID", {
-      dateStyle: "short",
-      timeStyle: "medium",
-    }));
-  }, [value]);
+  const formatted = useSyncExternalStore(
+    () => () => {},
+    () => formatLocalDateTime(value),
+    () => "",
+  );
+  const date = new Date(value);
+  const dateTime = Number.isNaN(date.getTime()) ? undefined : date.toISOString();
 
-  return <time dateTime={new Date(value).toISOString()}>{formatted || "Memuat waktu lokal…"}</time>;
+  return (
+    <time dateTime={dateTime}>
+      {formatted || "Memuat waktu lokal…"}
+    </time>
+  );
 }
