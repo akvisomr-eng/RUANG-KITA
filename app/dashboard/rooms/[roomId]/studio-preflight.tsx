@@ -71,6 +71,19 @@ export function StudioPreflight() {
           <p className="room-message" role="status" aria-live="polite">{status}</p>
         </div>
       </div>
+      {active && (
+        <section className="room-manager" aria-labelledby="production-workspace-title" style={{ marginTop: 24 }}>
+          <div className="room-manager-head">
+            <div>
+              <p className="auth-eyebrow">PERANGKAT SIAP</p>
+              <h2 id="production-workspace-title">Dashboard produksi</h2>
+              <p>Kamera dan mikrofon lokal aktif. Anda tetap berada di halaman studio ini; tidak perlu kembali ke detail ruang untuk melanjutkan persiapan.</p>
+            </div>
+            <span className="room-count">LOKAL SAJA</span>
+          </div>
+          <p className="room-field-help">Status ini menandakan perangkat siap pada browser ini, bukan siaran langsung. Penyiaran ke peserta lain, WebRTC/SFU, undangan peserta, dan perekaman belum diaktifkan.</p>
+        </section>
+      )}
       <p className="room-field-help">Fitur siaran multi-peserta tetap dinonaktifkan sampai penyedia WebRTC/SFU, otorisasi peserta, dan pengujian privasi disiapkan.</p>
     </section>
   );
