@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect, notFound } from "next/navigation";
 import { neon } from "@neondatabase/serverless";
 import { getServerAuth } from "@/lib/auth/server";
+import { LocalDateTime } from "@/app/components/local-date-time";
 
 export const dynamic = "force-dynamic";
 
@@ -47,7 +48,7 @@ export default async function PodcastDraftPage({ params }: PageProps) {
         <h1>{room.title}</h1>
         <p>{room.scene_title ? `Preset: ${room.scene_title}. ` : "Belum menggunakan preset produksi. "}{room.scene_description ?? ""}</p>
         <p>Status: <strong>{room.status === "draft" ? "DRAFT" : room.status.toUpperCase()}</strong> · {room.privacy_mode === "invite_only" ? "Privat · Undangan saja" : room.privacy_mode}</p>
-        <p>Dibuat: {new Date(room.created_at).toLocaleString("id-ID")}</p>
+        <p>Dibuat: <LocalDateTime value={room.created_at} /></p>
         <div className="room-message" role="status">
           Draft berhasil dibuka. Kontrol produksi, media langsung, WebRTC, dan undangan peserta belum diaktifkan pada tahap ini. Ruang ini belum menyiarkan audio atau video.
         </div>
