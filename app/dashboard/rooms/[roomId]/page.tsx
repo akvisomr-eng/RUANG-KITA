@@ -52,7 +52,8 @@ export default async function PodcastDraftPage({ params }: PageProps) {
         <div className="room-message" role="status">
           Draft berhasil dibuka. Kontrol produksi, media langsung, WebRTC, dan undangan peserta belum diaktifkan pada tahap ini. Ruang ini belum menyiarkan audio atau video.
         </div>
-        <p><Link className="primary-button" href="/dashboard">Kembali ke semua ruang</Link></p>
+        <p><Link className="primary-button" href={`/dashboard/rooms/${encodeURIComponent(room.id)}/studio`}>Siapkan kamera &amp; mikrofon</Link></p>
+        <p><Link href="/dashboard">Kembali ke semua ruang</Link></p>
       </section>
     </main>
   );
