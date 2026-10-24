@@ -36,14 +36,14 @@ export default async function PodcastStudioPreflightPage({ params }: PageProps) 
 
   return (
     <main className="dashboard-shell">
-      <header className="dashboard-top"><Link href="/" className="auth-brand">RUANGKITA</Link><span>Persiapan Studio</span></header>
+      <header className="dashboard-top"><Link href="/" className="auth-brand">RUANGKITA</Link><span>Dashboard Produksi</span></header>
       <section className="dashboard-welcome">
-        <p className="auth-eyebrow">PERSIAPAN PERANGKAT · {room.status.toUpperCase()}</p>
+        <p className="auth-eyebrow">DASHBOARD PRODUKSI · {room.status.toUpperCase()}</p>
         <h1>{room.title}</h1>
-        <p>Periksa kamera dan mikrofon lokal sebelum melanjutkan pengembangan produksi.</p>
+        <p>Siapkan perangkat dan kelola ruang dari satu halaman. Setelah perangkat aktif, panel produksi akan tampil di bawah ini.</p>
       </section>
       <StudioPreflight />
-      <p style={{ marginTop: 24 }}><Link className="primary-button" href={`/dashboard/rooms/${encodeURIComponent(room.id)}`}>Kembali ke detail ruang</Link></p>
+      <nav aria-label="Navigasi ruang" style={{ marginTop: 24, display: "flex", flexWrap: "wrap", gap: 16 }}><Link href={`/dashboard/rooms/${encodeURIComponent(room.id)}`}>Detail ruang</Link><Link href="/dashboard">Semua ruang</Link></nav>
     </main>
   );
 }
